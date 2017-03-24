@@ -91,6 +91,8 @@ bool checkposition (int x, int y,int selected)
 					continu = false;
 				}
 			}
+			else if (px + i - 1 == x && py + i - 1 == y)
+				return true;
 			else
 				continu = false;
 		}
@@ -111,6 +113,8 @@ bool checkposition (int x, int y,int selected)
 					continu = false;
 				}
 			}
+			else if (px == x && py + i - 1 == y)
+				return true;
 			else
 				continu = false;
 		}
@@ -124,7 +128,7 @@ bool checkposition (int x, int y,int selected)
 				{
 					i++;
 				}
-				else if (px == x - i + 1 && py + i - 1 == y)
+				else if (px - i + 1 == x  && py + i - 1 == y)
 				{
 					return true;
 				}
@@ -133,6 +137,8 @@ bool checkposition (int x, int y,int selected)
 					continu = false;
 				}
 			}
+			else if (px - i + 1 == x  && py + i - 1 == y)
+				return true;
 			else
 				continu = false;
 		}
@@ -157,6 +163,8 @@ bool checkposition (int x, int y,int selected)
 					continu = false;
 				}
 			}
+			else if (px + i - 1 == x && py - i + 1 == y)
+				return true;
 			else
 				continu = false;
 		}
@@ -177,6 +185,8 @@ bool checkposition (int x, int y,int selected)
 					continu = false;
 				}
 			}
+			else if (px == x && py - i + 1 == y)
+				return true;
 			else
 				continu = false;
 		}
@@ -190,13 +200,15 @@ bool checkposition (int x, int y,int selected)
 				{
 					i++;
 				}
-				else if (px == x - i + 1 && py - i + 1 == y)
+				else if (px - i + 1 == x  && py - i + 1 == y)
 					return true;
 				else
 				{
 					continu = false;
 				}
 			}
+			else if (px - i + 1 == x  && py - i + 1 == y)
+				return true;
 			else
 				continu = false;
 		}
@@ -239,6 +251,11 @@ bool AfficheCarre(int numC, Sprite &SCarreVert, int selectedpion)
 							continu = false;
 					}
 				}
+				else if (TabPlateau[py + i - 1][px + i - 1] == 0)
+				{
+					SCarreVert.setPosition(Vector2f((px + i - 1) * 64, (py + i - 1) * 64));
+					return true;
+				}
 				else
 					continu = false;
 			}
@@ -266,6 +283,11 @@ bool AfficheCarre(int numC, Sprite &SCarreVert, int selectedpion)
 							continu = false;
 					}
 				}
+				else if (TabPlateau[py + i - 1][px] == 0)
+				{
+					SCarreVert.setPosition(Vector2f(px * 64, (py + i - 1) * 64));
+					return true;
+				}
 				else
 					continu = false;
 			}
@@ -292,6 +314,11 @@ bool AfficheCarre(int numC, Sprite &SCarreVert, int selectedpion)
 						else
 							continu = false;
 					}
+				}
+				else if (TabPlateau[py + i - 1][px - i + 1] == 0)
+				{
+					SCarreVert.setPosition(Vector2f((px - i + 1) * 64, (py + i - 1) * 64));
+					return true;
 				}
 				else
 					continu = false;
@@ -324,6 +351,11 @@ bool AfficheCarre(int numC, Sprite &SCarreVert, int selectedpion)
 							continu = false;
 					}
 				}
+				else if (TabPlateau[py - i + 1][px + i - 1] == 0)
+				{
+					SCarreVert.setPosition(Vector2f((px + i - 1) * 64, (py - i + 1) * 64));
+					return true;
+				}
 				else
 					continu = false;
 			}
@@ -351,6 +383,11 @@ bool AfficheCarre(int numC, Sprite &SCarreVert, int selectedpion)
 							continu = false;
 					}
 				}
+				else if (TabPlateau[py - i + 1][px] == 0)
+				{
+					SCarreVert.setPosition(Vector2f((px) * 64, (py - i + 1) * 64));
+					return true;
+				}
 				else
 					continu = false;
 			}
@@ -377,6 +414,11 @@ bool AfficheCarre(int numC, Sprite &SCarreVert, int selectedpion)
 						else
 							continu = false;
 					}
+				}
+				else if (TabPlateau[py - i + 1][px - i + 1] == 0)
+				{
+					SCarreVert.setPosition(Vector2f((px - i + 1) * 64, (py - i + 1) * 64));
+					return true;
 				}
 				else
 					continu = false;
@@ -429,12 +471,6 @@ void main()
 	sf::RenderWindow window;
 	window.create(sf::VideoMode(512, 512), "My window");
 
-	
-	Sprite SPlateau;
-	Texture TPlateau;
-	Image image;
-	TPlateau.loadFromFile("plateau.jpg");
-
 	Sprite* SCarreVert = new Sprite[3];
 	Texture* TCarreVert = new Texture[3];
 	for (int i = 0; i < 3; i++)
@@ -443,7 +479,6 @@ void main()
 		SCarreVert[i].setTexture(TCarreVert[i]);
 	}
 
-	SPlateau.setTexture(TPlateau);
 	Mouse souris;
 	int selectedpion;
 	bool selected = false;
