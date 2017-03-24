@@ -7,57 +7,62 @@ using namespace sf;
 using namespace std;
 #include <string>
 int TabPlateau[8][8];
-Pions** lespions = new Pions*[32];
+Pions** lespions = new Pions*[33];
+
+
+//Initialisations
 void initpion(Pions** lespions)
 {
 	//Noir
 	//1pt
-	lespions[0] = new Pions(0, 0, 1, false);
-	lespions[7] = new Pions(0, 7, 1, false);
-	lespions[8] = new Pions(1,0, 1, false);
-	lespions[15] = new Pions(1, 7, 1, false);
+	lespions[1] = new Pions(0, 0, 1, false);
+	lespions[8] = new Pions(0, 7, 1, false);
+	lespions[9] = new Pions(1,0, 1, false);
+	lespions[16] = new Pions(1, 7, 1, false);
 	//2pt
-	lespions[1] = new Pions(0, 1, 2, false);
-	lespions[6] = new Pions(0, 6, 2, false);
-	lespions[9] = new Pions(1, 1, 2, false);
-	lespions[14] = new Pions(1, 6, 2, false);
+	lespions[2] = new Pions(0, 1, 2, false);
+	lespions[7] = new Pions(0, 6, 2, false);
+	lespions[10] = new Pions(1, 1, 2, false);
+	lespions[15] = new Pions(1, 6, 2, false);
 	//3pt
-	lespions[2] = new Pions(0, 2, 3, false);
-	lespions[5] = new Pions(0, 5, 3, false);
-	lespions[10] = new Pions(1, 2, 3, false);
-	lespions[13] = new Pions(1, 5, 3, false);
+	lespions[3] = new Pions(0, 2, 3, false);
+	lespions[6] = new Pions(0, 5, 3, false);
+	lespions[11] = new Pions(1, 2, 3, false);
+	lespions[14] = new Pions(1, 5, 3, false);
 	//4pt
-	lespions[11] = new Pions(1, 3, 4, false);
-	lespions[12] = new Pions(1, 4, 4, false);
+	lespions[12] = new Pions(1, 3, 4, false);
+	lespions[13] = new Pions(1, 4, 4, false);
 	//5pt
-	lespions[3] = new Pions(0, 3, 5, false);
-	lespions[4] = new Pions(0, 4, 5, false);
+	lespions[4] = new Pions(0, 3, 5, false);
+	lespions[5] = new Pions(0, 4, 5, false);
 
 
 	//Blanc
 	//1pt
-	lespions[16] = new Pions(6, 0, 1, true);
-	lespions[23] = new Pions(6, 7, 1, true);
-	lespions[24] = new Pions(7, 0, 1, true);
-	lespions[31] = new Pions(7, 7, 1, true);
+	lespions[17] = new Pions(6, 0, 1, true);
+	lespions[24] = new Pions(6, 7, 1, true);
+	lespions[25] = new Pions(7, 0, 1, true);
+	lespions[32] = new Pions(7, 7, 1, true);
 	//2pt
-	lespions[17] = new Pions(6, 1, 2, true);
-	lespions[22] = new Pions(6, 6, 2, true);
-	lespions[25] = new Pions(7, 1, 2, true);
-	lespions[30] = new Pions(7, 6, 2, true);
+	lespions[18] = new Pions(6, 1, 2, true);
+	lespions[23] = new Pions(6, 6, 2, true);
+	lespions[26] = new Pions(7, 1, 2, true);
+	lespions[31] = new Pions(7, 6, 2, true);
 	//3pt
-	lespions[18] = new Pions(6, 2, 3, true);
-	lespions[21] = new Pions(6, 5, 3, true);
-	lespions[26] = new Pions(7, 2, 3, true);
-	lespions[29] = new Pions(7, 5, 3, true);
+	lespions[19] = new Pions(6, 2, 3, true);
+	lespions[22] = new Pions(6, 5, 3, true);
+	lespions[29] = new Pions(7, 2, 3, true);
+	lespions[30] = new Pions(7, 5, 3, true);
 	//4pt
-	lespions[19] = new Pions(6, 3, 4, true);
-	lespions[20] = new Pions(6, 4, 4, true);
+	lespions[20] = new Pions(6, 3, 4, true);
+	lespions[21] = new Pions(6, 4, 4, true);
 	//5pt
 	lespions[27] = new Pions(7, 3, 5, true);
 	lespions[28] = new Pions(7, 4, 5, true);
 	
 }
+
+//Verifie deplacement
 bool checkposition (int x, int y,int selected)
 {
 	bool continu = true;
@@ -109,7 +114,7 @@ bool checkposition (int x, int y,int selected)
 			else
 				continu = false;
 		}
-		//Diago haut gauche
+		//Diago bas gauche
 		continu = true; i = 1;
 		while (continu)
 		{
@@ -119,7 +124,7 @@ bool checkposition (int x, int y,int selected)
 				{
 					i++;
 				}
-				else if (px == x + i - 1 && py + i - 1 == y)
+				else if (px == x - i + 1 && py + i - 1 == y)
 				{
 					return true;
 				}
@@ -136,6 +141,7 @@ bool checkposition (int x, int y,int selected)
 
 	if (lespions[selected]->equipe == true)
 	{
+		//Diago Haut Droite
 		while (continu)
 		{
 			if (px + i < 8 && py - i < 8)
@@ -184,7 +190,7 @@ bool checkposition (int x, int y,int selected)
 				{
 					i++;
 				}
-				else if (px == x + i - 1 && py - i + 1 == y)
+				else if (px == x - i + 1 && py - i + 1 == y)
 					return true;
 				else
 				{
@@ -197,12 +203,197 @@ bool checkposition (int x, int y,int selected)
 	}
 	return false;
 }
+
+//Affichage case ou moov possiblr 
+bool AfficheCarre(int numC, Sprite &SCarreVert, int selectedpion)
+{
+	bool continu = true;
+	int i = 1;
+	int px = lespions[selectedpion]->posx;
+	px = px / 64;
+	int py = lespions[selectedpion]->posy;
+	py = py / 64;
+
+	//Noir
+	//Diago bas droite
+	if (lespions[selectedpion]->equipe == false)
+	{
+		if (numC == 0)
+		{
+			while (continu)
+			{
+				if (px + i < 8 && py + i > -1)
+				{
+					if (TabPlateau[py + i][px + i] == 0)
+					{
+						i++;
+					}
+					else
+					{
+						if (TabPlateau[py + i - 1][px + i - 1] == 0)
+						{
+							SCarreVert.setPosition(Vector2f((px + i - 1) * 64, (py + i - 1) * 64));
+							return true;
+						}
+						else
+							continu = false;
+					}
+				}
+				else
+					continu = false;
+			}
+		}
+		//Bas 
+		continu = true; i = 1;
+		if (numC == 1)
+		{
+			while (continu)
+			{
+				if (px < 8 && py + i > -1)
+				{
+					if (TabPlateau[py + i][px] == 0)
+					{
+						i++;
+					}
+					else
+					{
+						if (TabPlateau[py + i - 1][px] == 0)
+						{
+							SCarreVert.setPosition(Vector2f(px * 64, (py + i - 1) * 64));
+							return true;
+						}
+						else
+							continu = false;
+					}
+				}
+				else
+					continu = false;
+			}
+		}
+		//Diago bas gauche
+		continu = true; i = 1;
+		if (numC == 2)
+		{
+			while (continu)
+			{
+				if (px - i > -1 && py + i > -1)
+				{
+					if (TabPlateau[py + i][px - i] == 0)
+					{
+						i++;
+					}
+					else
+					{
+						if (TabPlateau[py + i - 1][px - i + 1] == 0)
+						{
+							SCarreVert.setPosition(Vector2f((px - i + 1) * 64, (py + i - 1) * 64));
+							return true;
+						}
+						else
+							continu = false;
+					}
+				}
+				else
+					continu = false;
+			}
+		}
+	}
+
+
+	if (lespions[selectedpion]->equipe == true)
+	{
+		//Diago Haut Droite
+		if (numC == 0)
+		{
+			while (continu)
+			{
+				if (px + i < 8 && py - i < 8)
+				{
+					if (TabPlateau[py - i][px + i] == 0)
+					{
+						i++;
+					}
+					else
+					{
+						if (TabPlateau[py - i + 1][px + i - 1] == 0)
+						{
+							SCarreVert.setPosition(Vector2f((px + i - 1) * 64, (py - i + 1) * 64));
+							return true;
+						}
+						else
+							continu = false;
+					}
+				}
+				else
+					continu = false;
+			}
+		}
+		//Haut 
+		continu = true; i = 1;
+		if (numC == 1)
+		{
+			while (continu)
+			{
+				if (px < 8 && py - i > -1)
+				{
+					if (TabPlateau[py - i][px] == 0)
+					{
+						i++;
+					}
+					else
+					{
+						if (TabPlateau[py - i + 1][px] == 0)
+						{
+							SCarreVert.setPosition(Vector2f((px) * 64, (py - i + 1) * 64));
+							return true;
+						}
+						else
+							continu = false;
+					}
+				}
+				else
+					continu = false;
+			}
+		}
+		//Diago haut gauche
+		continu = true; i = 1;
+		if (numC == 2)
+		{
+			while (continu)
+			{
+				if (px - i > -1 && py - i < 8)
+				{
+					if (TabPlateau[py - i][px - i] == 0)
+					{
+						i++;
+					}
+					else
+					{
+						if (TabPlateau[py - i + 1][px - i + 1] == 0)
+						{
+							SCarreVert.setPosition(Vector2f((px - i + 1) * 64, (py - i + 1) * 64));
+							return true;
+						}
+						else
+							continu = false;
+					}
+				}
+				else
+					continu = false;
+			}
+		}
+	}
+	return false;
+}
+
+
+//Main
 void main()
 {
 
 	initpion(lespions);
 
-	int numpion = 0;
+	int numpion = 1;
 
 	//Creation de la map
 	Map map;
@@ -236,7 +427,7 @@ void main()
 	}
 	string nom = "Souitch";
 	sf::RenderWindow window;
-	window.create(sf::VideoMode(800, 600), "My window");
+	window.create(sf::VideoMode(512, 512), "My window");
 
 	
 	Sprite SPlateau;
@@ -244,7 +435,13 @@ void main()
 	Image image;
 	TPlateau.loadFromFile("plateau.jpg");
 
-
+	Sprite* SCarreVert = new Sprite[3];
+	Texture* TCarreVert = new Texture[3];
+	for (int i = 0; i < 3; i++)
+	{
+		TCarreVert[i].loadFromFile("vert.png");
+		SCarreVert[i].setTexture(TCarreVert[i]);
+	}
 
 	SPlateau.setTexture(TPlateau);
 	Mouse souris;
@@ -300,9 +497,17 @@ void main()
 			}
 			window.clear();
 			window.draw(map);
-			for (int i = 0; i < 32; i++)
+			for (int i = 1; i < 33; i++)
 			{
 				window.draw(lespions[i]->getSPions());
+			}
+			if (selected)
+			{
+				for (int i = 0; i < 3; i++)
+				{
+					if (AfficheCarre(i, SCarreVert[i], selectedpion))
+						window.draw(SCarreVert[i]);
+				}
 			}
 			window.display();
 			
