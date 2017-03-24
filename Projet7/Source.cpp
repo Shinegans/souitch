@@ -69,7 +69,7 @@ bool checkposition (int x, int y,int selected)
 
 	//Noir
 	//Diago bas droite
-	if (lespions[selected]->valeur == 1)
+	if (lespions[selected]->equipe == false)
 	{
 		while (continu)
 		{
@@ -132,7 +132,9 @@ bool checkposition (int x, int y,int selected)
 				continu = false;
 		}
 	}
-	if (lespions[selected]->valeur == 1)
+
+
+	if (lespions[selected]->equipe == true)
 	{
 		while (continu)
 		{
@@ -193,6 +195,7 @@ bool checkposition (int x, int y,int selected)
 				continu = false;
 		}
 	}
+	return false;
 }
 void main()
 {
@@ -282,6 +285,11 @@ void main()
 							if (checkposition(x, y, selectedpion))
 							{
 								lespions[selectedpion]->SPions.setPosition(Vector2f(x * 64, y * 64));
+								TabPlateau[y][x] = selectedpion;
+								TabPlateau[lespions[selectedpion]->posy / 64][lespions[selectedpion]->posx / 64] = 0;
+								lespions[selectedpion]->posx = x * 64;
+								lespions[selectedpion]->posy = y * 64;
+								lespions[selectedpion]->SPions.setPosition(Vector2f(lespions[selectedpion]->posx, lespions[selectedpion]->posy));
 								selected = false;
 							}
 						}

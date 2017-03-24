@@ -7,8 +7,8 @@ private:
 	Texture TPions;
 	int posxdepart;
 	int posydepart;
-	bool equipe;
 public:
+	bool equipe;
 	int posx;
 	int posy;
 	int valeur;
